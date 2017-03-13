@@ -139,11 +139,6 @@ public class PaintBrushDefine {
         final int nativeInt;
     }
 
-    public static final int PAINT_BRUSH_RNG_QUALITY = 19;
-    public static final int PAINT_BRUSH_RNG_TT = 7;
-    public static final int PAINT_BRUSH_RNG_KK = 10;
-    public static final int PAINT_BRUSH_RNG_LL = 7;
-
     public static final int PAINT_BRUSH_CPOINTS_COUNT = 8;
 
     public static final int PAINT_BRUSH_CALC_COUNT = 2;
