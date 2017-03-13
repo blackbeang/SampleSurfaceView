@@ -41,8 +41,34 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         y -= srcImg.getHeight()/2;
 
         if(action == MotionEvent.ACTION_DOWN) {
-            if(srcImg != null && mCanvas != null)
-                mCanvas.drawBitmap(srcImg, x, y, mPaint);
+            if(srcImg != null && mCanvas != null) {
+                //mCanvas.drawBitmap(srcImg, x, y, mPaint);
+                int pixelArray[] = new int[srcImg.getWidth() * srcImg.getHeight()];
+                srcImg.getPixels(pixelArray, 0, srcImg.getWidth(), 0, 0, srcImg.getWidth(), srcImg.getHeight());
+
+                int wQ = srcImg.getWidth()/4;
+                int hQ = srcImg.getHeight()/4;
+
+                int wS = wQ, hS = hQ;
+                int wE = wS + (wQ*2), hE = hS + (hQ*2);
+
+                // boundary check
+                if(wE > srcImg.getWidth())
+                    wE = srcImg.getWidth();
+                if(hE > srcImg.getHeight())
+                    hE = srcImg.getHeight();
+
+                for(int i = hS; i < hE; i++) {
+                    for(int j = wS; j < wE; j++) {
+                        int newMask = 50 << 24;
+                        int curRgb = pixelArray[(srcImg.getWidth()*i) + j] & 0x00FFFFFF;
+                        pixelArray[(srcImg.getWidth()*i) + j] = curRgb | newMask;
+                    }
+                }
+
+                Bitmap bmp = Bitmap.createBitmap(pixelArray, srcImg.getWidth(), srcImg.getHeight(), Bitmap.Config.ARGB_8888);
+                mCanvas.drawBitmap(bmp, x, y, null);
+            }
         }
 
         draw();
