@@ -6,10 +6,20 @@ package org.androidtown.mypaintlib;
 
 // Random Number Generator
 public class PBRgnDouble {
+    /*
+    // original settings
+    public static final int RNG_QUALITY = 1009;	// recommended quality level for high-res use
+    public static final int RNG_TT = 70;			// guaranteed separation between streams
+    public static final int RNG_KK = 100;			// the long lag
+    public static final int RNG_LL = 37;			// the short lag
+    */
+    // low quality settings, seems to work for MyPaint
+    // (Disclaimer: I don't understand what those numbers do, I just reduced them. --maxy)
     public static final int RNG_QUALITY = 19;
     public static final int RNG_TT = 7;
     public static final int RNG_KK = 10;
     public static final int RNG_LL = 7;
+
 
     private RandomBuffer dRanfArrDummy;
     private RandomBuffer dRanfArrStarted;
@@ -17,6 +27,8 @@ public class PBRgnDouble {
     private RandomBuffer m_arrRanU;     // the generator state
     private RandomBuffer m_arrRanfBuf;
     private RandomBuffer m_pRanfArr;    // the next random fraction, or -1
+    private int m_nRndfIndex;
+
 
     public PBRgnDouble(long nSeed) {
         m_arrRanU = new RandomBuffer(RNG_KK);
@@ -26,7 +38,7 @@ public class PBRgnDouble {
         dRanfArrStarted = new RandomBuffer(1, -1);
 
         m_pRanfArr = dRanfArrDummy;
-        m_pRanfArr.buf_index = 0;
+        m_nRndfIndex = 0;
 
         setSeed(nSeed);
     }
@@ -80,7 +92,7 @@ public class PBRgnDouble {
             getArray(u, RNG_KK+RNG_KK-1);	// warm things up
 
         m_pRanfArr = dRanfArrStarted;
-        m_pRanfArr.buf_index = 0;
+        m_nRndfIndex = 0;
     }
 
     public void getArray(RandomBuffer aa, int n) {
@@ -106,9 +118,9 @@ public class PBRgnDouble {
 
     public double doubleNext() {
         double ret = 0;
-        if(m_pRanfArr.buf_nums[m_pRanfArr.buf_index] >= 0){
-            ret = m_pRanfArr.buf_nums[m_pRanfArr.buf_index];
-            m_pRanfArr.buf_index++;
+        if(m_pRanfArr.getNum(m_nRndfIndex) >= 0) {
+            ret = m_pRanfArr.getNum(m_nRndfIndex);
+            m_nRndfIndex++;
         }
         else    // *m_pRanfArr == -1이면 마지막을 가리키고 있는 것 ;)
             ret = doubleCycle();
@@ -121,7 +133,7 @@ public class PBRgnDouble {
         m_arrRanfBuf.buf_nums[RNG_KK] = -1;
 
         m_pRanfArr = m_arrRanfBuf;
-        m_pRanfArr.buf_index = 1;
+        m_nRndfIndex = 1;
 
         return m_arrRanfBuf.buf_nums[0];
     }
@@ -130,8 +142,7 @@ public class PBRgnDouble {
 
 class RandomBuffer {
     public double[] buf_nums;
-    public int buf_count;
-    public int buf_index;
+    private int buf_count;
 
     public RandomBuffer(int count) {
         create(count);
@@ -147,6 +158,11 @@ class RandomBuffer {
         count = Math.max(1, count);
         buf_nums = new double[count];
         buf_count = count;
-        buf_index = 0;
+    }
+
+    public double getNum(int index) {
+        if(index < 0 || index >= buf_count)
+            return -1;
+        return buf_nums[index];
     }
 }

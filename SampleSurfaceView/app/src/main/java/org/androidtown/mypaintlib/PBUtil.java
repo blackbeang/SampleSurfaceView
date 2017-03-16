@@ -80,5 +80,3 @@ public class PBUtil {
     public static final float ACTUAL_RADIUS_MIN = 0.2f;
     public static final float ACTUAL_RADIUS_MAX = 1000.0f;  // safety guard against radius like 1e20 and against rendering overload with unexpected brush dynamics
 }
-
-
