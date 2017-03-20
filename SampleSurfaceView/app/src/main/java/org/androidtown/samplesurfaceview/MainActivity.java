@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
 
-        int test = 0;
+        int test = 1;
         if(test == 0) {
             MySurfaceView mySurfaceView = new MySurfaceView(this);
             mySurfaceView.setLayoutParams(params);

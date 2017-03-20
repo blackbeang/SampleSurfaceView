@@ -41,7 +41,7 @@ public class PBUtil {
         if(id >= 0 && id < PaintBrushSetting.PAINT_BRUSH_SETTINGS_COUNT.ordinal())
             return true;
         else {
-            assert (false);
+            assert(false);
             return false;
         }
     }
@@ -53,7 +53,7 @@ public class PBUtil {
         if(id >= 0 && id < inputs)
             return true;
         else {
-            assert (false);
+            assert(false);
             return false;
         }
     }
@@ -62,7 +62,7 @@ public class PBUtil {
         if(idx >= 0 && idx < PaintBrushDefine.PAINT_BRUSH_CPOINTS_COUNT)
             return true;
         else {
-            assert (false);
+            assert(false);
             return false;
         }
     }

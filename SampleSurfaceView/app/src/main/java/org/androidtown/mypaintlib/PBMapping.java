@@ -17,8 +17,11 @@ public class PBMapping {
         m_nInputUsed = 0;
 
         m_pPointsList = new ControlPoints[nInputs];
-        if(m_pPointsList != null)
+        if(m_pPointsList != null) {
+            for(int i = 0; i < nInputs; i++)
+                m_pPointsList[i] = new ControlPoints();
             m_nInputs = nInputs;
+        }
         else
             m_nInputs = 0;
     }

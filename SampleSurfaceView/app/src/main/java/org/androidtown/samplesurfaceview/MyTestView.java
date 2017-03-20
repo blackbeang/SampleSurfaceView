@@ -38,6 +38,14 @@ public class MyTestView extends View{
         mPaint.setStyle(Paint.Style.STROKE);
 
         mCanvas.drawLine(100, 100, 300, 100, mPaint);
+
+        /*
+        PrPaintBrush sExtPenBrush(&g_brBitmap);
+        paintBrushLeavesSetting(sExtPenBrush);
+        int x1 = 100, y1 = 100, x2 = 300, y2 = 100;
+
+        sExtPenBrush.strokeTo(x1, y1, PB_PRESSURE, PB_XTILT, PB_YTILT, PB_DTIME);
+        */
     }
 
     @Override
