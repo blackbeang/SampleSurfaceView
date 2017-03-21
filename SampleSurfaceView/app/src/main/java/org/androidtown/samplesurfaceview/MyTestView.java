@@ -7,6 +7,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
+import org.androidtown.mypaintlib.PaintBrush;
+import org.androidtown.mypaintlib.PaintBrushDefine;
+import org.androidtown.mypaintlib.PaintBrushSetter;
+
 /**
  * Created by ejchoi on 2017-03-13.
  */
@@ -33,19 +37,21 @@ public class MyTestView extends View{
     }
 
     private void testDrawing() {
+        int x1 = 100, y1 = 100, x2 = 300, y2 = 100;
+
+        /*
         mPaint.setStrokeWidth(10);
         mPaint.setARGB(255, 0, 0, 255);
         mPaint.setStyle(Paint.Style.STROKE);
 
-        mCanvas.drawLine(100, 100, 300, 100, mPaint);
-
-        /*
-        PrPaintBrush sExtPenBrush(&g_brBitmap);
-        paintBrushLeavesSetting(sExtPenBrush);
-        int x1 = 100, y1 = 100, x2 = 300, y2 = 100;
-
-        sExtPenBrush.strokeTo(x1, y1, PB_PRESSURE, PB_XTILT, PB_YTILT, PB_DTIME);
+        mCanvas.drawLine(x1, y1, x2, y2, mPaint);
         */
+
+        PaintBrush sExtPenBrush = new PaintBrush(mBitmap);
+        PaintBrushSetter.LeavesPaintBrushSetting(sExtPenBrush);
+        //PaintBrushSetter.DefaultPaintBrushSetting(sExtPenBrush);
+        sExtPenBrush.strokeTo(x1, y1, PaintBrushDefine.PAINT_BRUSH_PRESSURE, PaintBrushDefine.PAINT_BRUSH_XTILT, PaintBrushDefine.PAINT_BRUSH_YTILT, PaintBrushDefine.PAINT_BRUSH_DTIME);
+        sExtPenBrush.strokeTo(x2, y2, PaintBrushDefine.PAINT_BRUSH_PRESSURE, PaintBrushDefine.PAINT_BRUSH_XTILT, PaintBrushDefine.PAINT_BRUSH_YTILT, PaintBrushDefine.PAINT_BRUSH_DTIME);
     }
 
     @Override

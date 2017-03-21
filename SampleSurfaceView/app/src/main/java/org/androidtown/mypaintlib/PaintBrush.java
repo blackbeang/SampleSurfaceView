@@ -1,6 +1,7 @@
 package org.androidtown.mypaintlib;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.util.Log;
 import android.util.LongSparseArray;
 
@@ -23,8 +24,8 @@ import org.androidtown.mypaintlib.PaintBrushDefine.PaintBrushInput;
 public class PaintBrush {
     private static final String PB_DEBUG_TAG = "[LOG_PaintBrush]";
 
-    private Bitmap m_pBitmap;
-    private Bitmap m_DabBitmap;
+    private Canvas m_pCanvas;
+    private int[] m_pDabPixel;
 
     // for stroke splitting (undo/redo)
     private double m_dStrokeTotalPaintingTime;
@@ -49,8 +50,9 @@ public class PaintBrush {
     boolean	m_bResetRequested;
 
 
-    public PaintBrush() {
-        m_DabBitmap = Bitmap.createBitmap(PaintBrushDefine.PAINT_BRUSH_MAX_TILE_SIZE, PaintBrushDefine.PAINT_BRUSH_MAX_TILE_SIZE, Bitmap.Config.ARGB_8888);
+    public PaintBrush(Bitmap bitmap) {
+        setBitmap(bitmap);
+        m_pDabPixel = new int[PaintBrushDefine.PAINT_BRUSH_MAX_TILE_SIZE * PaintBrushDefine.PAINT_BRUSH_MAX_TILE_SIZE];
 
         m_dStrokeTotalPaintingTime = 0;
         m_dStrokeCurrentIdlingTime = 0;
@@ -117,7 +119,8 @@ public class PaintBrush {
     }
 
     public void setBitmap(Bitmap bitmap) {
-        m_pBitmap = bitmap;
+        m_pCanvas = new Canvas();
+        m_pCanvas.setBitmap(bitmap);
     }
 
     public void setMappingN(int id, int input, int n) {
@@ -136,6 +139,7 @@ public class PaintBrush {
         if(PBUtil.CHECK_SETTING_ID(id) == false)
             return;
         m_pArrSettings[id].setBaseValue(value);
+
         settingsBaseValuesHaveChanged();
     }
 
@@ -144,6 +148,11 @@ public class PaintBrush {
     // @dtime: Time since last motion event, in seconds
     // Returns: TRUE if the stroke is finished or empty, else FALSE
     public boolean strokeTo(float x, float y, float pressure, float xtilt, float ytilt, float dtime) {
+        if(m_pCanvas == null || m_pDabPixel == null) {
+            assert(false);
+            return false;
+        }
+
         float tilt_ascension = 0.0f;
         float tilt_declination = 90.0f;
 
@@ -243,6 +252,7 @@ public class PaintBrush {
 
         float step_dx, step_dy, step_dpressure, step_dtime;
         float step_declination, step_ascension;
+
         while(dist_moved + dist_todo >= 1.0)
         {	// there are dabs pending
             {	// linear interpolation (nonlinear variant was too slow, see SVN log)
@@ -860,7 +870,7 @@ public class PaintBrush {
 
         for(int ty = ty1; ty <= ty2; ty++)
             for(int tx = tx1; tx <= tx2; tx++)
-                PaintBrushDraw.drawDabLine(sDDData, m_pBitmap, m_DabBitmap, tx, ty);
+                PaintBrushDraw.drawDabLine(sDDData, m_pCanvas, m_pDabPixel, tx, ty);
 
         return true;
     }

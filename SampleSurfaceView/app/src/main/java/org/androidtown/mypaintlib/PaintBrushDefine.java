@@ -142,4 +142,9 @@ public class PaintBrushDefine {
     public static final int PAINT_BRUSH_CPOINTS_COUNT = 8;
 
     public static final int PAINT_BRUSH_CALC_COUNT = 2;
+
+    public static final float PAINT_BRUSH_PRESSURE = 0.5f;
+    public static final float PAINT_BRUSH_XTILT = 0.0f;
+    public static final float PAINT_BRUSH_YTILT = 0.0f;
+    public static final float PAINT_BRUSH_DTIME = (1.0f/10);
 }

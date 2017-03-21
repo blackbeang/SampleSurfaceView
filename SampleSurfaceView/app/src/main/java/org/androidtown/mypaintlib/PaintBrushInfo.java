@@ -5,10 +5,10 @@ package org.androidtown.mypaintlib;
  */
 
 public class PaintBrushInfo {
-    private boolean bConstant;
-    private float fMin;
-    private float fDefault;
-    private float fMax;
+    public boolean bConstant;
+    public float fMin;
+    public float fDefault;
+    public float fMax;
 
     public PaintBrushInfo(boolean bConstant, float fMin, float fDefault, float fMax) {
         this.bConstant = bConstant;
@@ -70,6 +70,11 @@ class DefaultPaintBrushInfo {
         arrDefaultPaintBrush[43] = new PaintBrushInfo(false, 0.0f, 0.0f, 1.0f);// snap_to_pixel
         arrDefaultPaintBrush[44] = new PaintBrushInfo(true, -1.8f, 0.0f, 1.8f);// pressure_gain_log
     }
+
+    public PaintBrushInfo getDefaultSettingInfo(int id) {
+        PBUtil.CHECK_SETTING_ID(id);
+        return arrDefaultPaintBrush[id];
+    }
 }
 
 
@@ -111,11 +116,11 @@ class LeavesPaintBrushInfo {
         arrLeavesPaintBrush[0] = new PaintBrushInfo(false, 0.0f, 1.0f, 2.0f);// opaque
         arrLeavesPaintBrush[1] = new PaintBrushInfo(false, 0.0f, 0.0f, 2.0f);// opaque_multiply
         arrLeavesPaintBrush[2] = new PaintBrushInfo(true, 0.0f, 0.0f, 2.0f);// opaque_linearize
-        arrLeavesPaintBrush[3] = new PaintBrushInfo(false, -2.0f, 1.89f, 6.0f);// radius_logarithmic
+        arrLeavesPaintBrush[3] = new PaintBrushInfo(false, -2.0f, 2.5f/*1.89f*/, 6.0f);// radius_logarithmic
         arrLeavesPaintBrush[4] = new PaintBrushInfo(false, 0.0f, 0.8f, 1.0f);// hardness
         arrLeavesPaintBrush[5] = new PaintBrushInfo(false, 0.0f, 1.0f, 5.0f);// anti_aliasing
-        arrLeavesPaintBrush[6] = new PaintBrushInfo(true, 0.0f, 0.0f, 6.0f);// dabs_per_basic_radius
-        arrLeavesPaintBrush[7] = new PaintBrushInfo(true, 0.0f, 2.0f, 6.0f);// dabs_per_actual_radius
+        arrLeavesPaintBrush[6] = new PaintBrushInfo(true, 0.0f, 2.5f/*0.0f*/, 6.0f);// dabs_per_basic_radius
+        arrLeavesPaintBrush[7] = new PaintBrushInfo(true, 0.0f, 2.5f/*2.0f*/, 6.0f);// dabs_per_actual_radius
         arrLeavesPaintBrush[8] = new PaintBrushInfo(true, 0.0f, 0.0f, 80.0f);	// dabs_per_second
         arrLeavesPaintBrush[9] = new PaintBrushInfo(false, 0.0f, 0.0f, 1.5f);// radius_by_random
         arrLeavesPaintBrush[10] = new PaintBrushInfo(false, 0.0f, 0.04f, 0.2f);// speed1_slowness(Fine speed filter)
@@ -153,6 +158,11 @@ class LeavesPaintBrushInfo {
         arrLeavesPaintBrush[42] = new PaintBrushInfo(false, 0.0f, 0.0f, 1.0f);// colorize
         arrLeavesPaintBrush[43] = new PaintBrushInfo(false, 0.0f, 0.0f, 1.0f);// snap_to_pixel
         arrLeavesPaintBrush[44] = new PaintBrushInfo(true, -1.8f, 0.0f, 1.8f);// pressure_gain_log
+    }
+
+    public PaintBrushInfo getLeavesSettingInfo(int id) {
+        PBUtil.CHECK_SETTING_ID(id);
+        return arrLeavesPaintBrush[id];
     }
 }
 

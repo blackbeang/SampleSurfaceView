@@ -57,6 +57,21 @@ public class PBMath {
         return rr;
     }
 
+    public static float calculateOpa(float rr, float hardness, float segment1_offset, float segment1_slope, float segment2_offset, float segment2_slope) {
+        final float fac = (rr <= hardness)? segment1_slope:segment2_slope;
+        float opa = (rr <= hardness)? segment1_offset:segment2_offset;
+        opa += rr*fac;
+
+        if(rr > 1.0f)
+            opa = 0.0f;
+
+/* HEAVY_DEBUG
+        assert(PBUtil.isFinite(opa));
+        assert(opa >= 0.0f && opa <= 1.0f);
+*/
+        return opa;
+    }
+
     public static float signPointInLine(float px, float py, float vx, float vy) {
         return (px - vx) * (-vy) - (vx) * (py - vy);
     }

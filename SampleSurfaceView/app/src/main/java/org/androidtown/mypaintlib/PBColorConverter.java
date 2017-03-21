@@ -59,7 +59,7 @@ public class PBColorConverter {
 
         h = color.c1 - (float)Math.floor(color.c1);
         s = PBUtil.MINMAX(0.0f, color.c2, 1.0f);
-        v = PBUtil.MINMAX(0.0f, color.c2, 1.0f);
+        v = PBUtil.MINMAX(0.0f, color.c3, 1.0f);
 
         float hue;
 
